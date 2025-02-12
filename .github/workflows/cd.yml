@@ -21,7 +21,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /synth/fastapi-book-project
+            cd /home/synth/fastapi-book-project
             git pull origin main
             source venv/bin/activate
             pip install -r requirements.txt
