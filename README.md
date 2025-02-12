@@ -49,7 +49,7 @@ fastapi-book-project/
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/hng12-devbotops/fastapi-book-project.git
+git clone https://github.com/thegirlSynth/fastapi-book-project.git
 cd fastapi-book-project
 ```
 
@@ -128,7 +128,61 @@ The API includes proper error handling for:
 - Invalid book IDs
 - Invalid genre types
 - Malformed requests
-## App available [here](http://52.35.34.186)
+
+## ⚙️ CI/CD with GitHub Actions
+This project includes a **CI/CD pipeline** using **GitHub Actions**.
+
+### **1️⃣ CI: Automated Testing on PRs**
+Whenever a pull request is opened, the pipeline:
+- Runs `pytest`
+- Fails if any test does not pass
+
+### **2️⃣ CD: Auto-Deployment on Merge to `main`**
+When code is merged into `main`, the app is automatically deployed.
+
+## 📦 Deployment
+### **1️⃣ Set Up Nginx as a Reverse Proxy**
+1. Install Nginx:
+   ```sh
+   sudo apt update && sudo apt install nginx -y
+   ```
+2. Configure Nginx:
+   ```sh
+   sudo nano /etc/nginx/sites-available/fastapi
+   ```
+   Add the following content:
+   ```nginx
+   server {
+       listen 80;
+       server_name your-server-ip;
+
+       location / {
+           proxy_pass http://127.0.0.1:8000;
+           proxy_set_header Host $host;
+           proxy_set_header X-Real-IP $remote_addr;
+           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+           proxy_set_header X-Forwarded-Proto $scheme;
+       }
+   }
+   ```
+3. Enable the configuration and restart Nginx:
+   ```sh
+   sudo ln -s /etc/nginx/sites-available/fastapi /etc/nginx/sites-enabled/
+   sudo nginx -t
+   sudo systemctl restart nginx
+   ```
+
+Now, your API should be accessible via:
+```
+http://your-server-ip/
+```
+
+
+## 📌 Additional Notes
+- **Logging**: Logs are stored in `/var/log/nginx/access.log` and `/var/log/nginx/error.log`.
+- **Monitoring**: Use `systemctl status fastapi` to check if the service is running.
+
+
 ## Contributing
 
 1. Fork the repository
