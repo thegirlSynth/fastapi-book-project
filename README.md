@@ -128,7 +128,7 @@ The API includes proper error handling for:
 - Invalid book IDs
 - Invalid genre types
 - Malformed requests
-
+## App available [here](http://52.35.34.186)
 ## Contributing
 
 1. Fork the repository
