@@ -1,0 +1,32 @@
+name: CD Pipeline for FastAPI project
+
+on:
+  push:
+    branches:
+      - main  # Deploy on merge to main
+
+jobs:
+  deploy:
+    name: Deploy Application
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install Dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Deploy to Server
+        run: |
+          echo "Deploying to server..."
+          # Example deployment commands:
+          # scp -r . user@yourserver:/path/to/app
+          # ssh user@yourserver 'cd /path/to/app && docker-compose up -d --build'
