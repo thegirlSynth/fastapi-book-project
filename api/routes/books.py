@@ -68,3 +68,7 @@ async def get_book_by_id(book_id: int):
     if not book:
         return JSONResponse(status_code=status.HTTP_404_NOT_FOUND, content={"detail": "Book not found"})
     return book
+
+@router.get("/test/test", status_code=status.HTTP_200_OK)
+async def test_api():
+    return {"hello, there"}
